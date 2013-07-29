@@ -37,3 +37,6 @@ def generate_isym(source="isymbot_text.txt", chain_length=3, size=25):
     '''
     isympost = isymmarkov.ISYMMarkov(open(source, "r+"), chain_length)
     return isympost.generate_markov_isym(size)
+
+if __name__ == "__main__":
+    print generate_isym()

@@ -22,13 +22,18 @@ class ISYMMarkov(object):
         return words
             
     def ngrams(self):
-        # Generates an n-gram from the given data string. So if our string were
+        '''
+        Generates an n-gram from the given data string.
+        '''
         if len(self.words) < self.chain_length:
             return
         for i in range(len(self.words) - self.chain_length - 1):
             yield tuple([self.words[i + j] for j in range(self.chain_length)]) 
                     
     def database(self):
+        '''
+        Builds a dictionary "cache" to store n-gram keys and values taken from text
+        '''
         for ngram in self.ngrams():
             key = ngram[:-1]
             if key in self.cache:
@@ -37,7 +42,12 @@ class ISYMMarkov(object):
                 self.cache[key] = [ngram[-1]]
 				
     def generate_markov_isym(self, size=25):
+        '''
+        Generates Markov text.
+        '''
+        #chooses random integer for starting point in the text
         seed = random.randint(0, self.word_size - self.chain_length)
+        #n_words corresponds to initial state of the Markov chain
         n_words = [self.words[seed + i] for i in range(self.chain_length)]
         gen_words = []
         punct = [".", "!", "?"]
